@@ -29,6 +29,12 @@ namespace LibraryDB.Models
         }
         public bool IsAvailable { get; set; }
 
+
+        public Book()
+        {
+            
+        }
+
     }
 
 

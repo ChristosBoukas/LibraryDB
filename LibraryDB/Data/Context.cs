@@ -11,8 +11,27 @@ namespace LibraryDB.Data
     internal class Context: DbContext
     {
         DbSet<Customer> Customers { get; set; }
+        DbSet<LoanCard> LoanCards { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"
+                Server=localhost;
+                Database=NewtonLibraryChristos;
+                Trusted_Connection=true;
+                Trust Server Certificate=yes;
+                User Id=NewtonLibraryChristos;
+                password=NewtonLibraryChristos");
+        }
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Customer>()
+        //        .HasOne(c => c.LoanCard)
+        //        .WithOne(l => l.Customer)
+        //        .HasForeignKey<LoanCard>(l => l.Customerid)
+        //        .IsRequired();
+        //}
 
 
     }
