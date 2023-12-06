@@ -43,7 +43,6 @@ namespace LibraryDB.Data
 
                 context.LoanCards.Add(newLoanCard);
                 context.SaveChanges();
-
             }
         }
 
@@ -53,6 +52,10 @@ namespace LibraryDB.Data
             {
                 var rnd = new csSeedGenerator();
 
+                Author newAuthor = new Author();
+                newAuthor.FirstName = rnd.FirstName;
+                newAuthor.LastName = rnd.LastName;
+
                 Book newBook = new Book();
                 newBook.Title = rnd.MusicAlbum;
                 newBook.ISBN = GenerateISBN();
@@ -60,10 +63,12 @@ namespace LibraryDB.Data
                 newBook.Grade = rnd.FromEnum<enGrade>().ToString();
                 newBook.IsAvailable = true;
 
-                Author newAuthor = new Author();
-                newAuthor.FirstName = rnd.FirstName;
-                newAuthor.LastName = rnd.LastName;
+                newBook.Author.Add(newAuthor);
+                newAuthor.Books.Add(newBook);
 
+                context.Books.Add(newBook);
+
+                context.SaveChanges();
             }
         }
 
@@ -79,5 +84,21 @@ namespace LibraryDB.Data
             var rnd = new csSeedGenerator();
             return rnd.Next(1000, 9000);
         }
+
+        public Book? GetFirstOrDefault(Book book, string title, Context context)
+        {
+            return context.Books.Where(book => book.Title == title).FirstOrDefault();
+
+
+        }
+
+        //public T GetFirstOrDefault<T>()
+        //{
+
+            
+        //}
+
+
+
     }
 }
