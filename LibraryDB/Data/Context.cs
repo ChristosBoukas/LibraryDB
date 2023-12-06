@@ -10,8 +10,8 @@ namespace LibraryDB.Data
 {
     internal class Context: DbContext
     {
-        DbSet<Customer> Customers { get; set; }
-        DbSet<LoanCard> LoanCards { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<LoanCard> LoanCards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

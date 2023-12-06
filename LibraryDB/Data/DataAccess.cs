@@ -41,14 +41,38 @@ namespace LibraryDB.Data
                 newLoanCard.Pin = GeneratePin();
                 newLoanCard.Customer = newCustomer;
 
-                //context.LoanCards.Add(newLoanCard);
+                context.LoanCards.Add(newLoanCard);
                 context.SaveChanges();
 
             }
         }
 
+        public void SeedBookAndAuthor()
+        {
+            using (Context context = new Context())
+            {
+                var rnd = new csSeedGenerator();
+
+                Book newBook = new Book();
+                newBook.Title = rnd.MusicAlbum;
+                newBook.ISBN = GenerateISBN();
+                newBook.Year = rnd.Next(1900, 2023);
+                newBook.Grade = rnd.FromEnum<enGrade>().ToString();
+                newBook.IsAvailable = true;
+
+                Author newAuthor = new Author();
+                newAuthor.FirstName = rnd.FirstName;
+                newAuthor.LastName = rnd.LastName;
+
+            }
+        }
 
 
+        public string GenerateISBN()
+        {
+            var rnd = new csSeedGenerator();
+            return $"{rnd.Next(1000, 9000)}-{rnd.Next(1, 9)}-{rnd.Next(10, 99)}-{rnd.Next(100000, 999999)}-{rnd.Next(1, 9)}";
+        }
 
         public int GeneratePin()
         {

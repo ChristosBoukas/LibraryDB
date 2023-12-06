@@ -14,7 +14,8 @@ namespace LibraryDB.Models
         public string Title { get; set; }
         public string ISBN { get; set; }
         public int Year { get; set; }
-        public string _grade;
+
+        protected string _grade;
         public string Grade
         {
             get { return _grade; }
