@@ -111,7 +111,32 @@ namespace LibraryDB.Data
 
         public void CreateCustomerAndLoanCard()
         {
+            using (Context context = new Context())
+            {
+                //Create Loan Card
+                LoanCard newLoanCard = new LoanCard();
+                Console.WriteLine("Input Loan Card Pin:");
+                string inputString = Console.ReadLine();
+                if (int.TryParse(inputString, out int outResult))
+                {
+                    newLoanCard.Pin = outResult;
+                }
 
+                //Create Customer
+                Customer newCustomer = new Customer();
+                Console.WriteLine("Input Customer First Name:");
+                inputString = Console.ReadLine();
+                newCustomer.FirstName = inputString;
+                Console.WriteLine("Input Customer Last Name:");
+                inputString = Console.ReadLine();
+                newCustomer.LastName = inputString;
+
+                newLoanCard.Customer = newCustomer;
+
+                context.LoanCards.Add(newLoanCard);
+                context.SaveChanges();
+
+            }
         }
 
         public void SeedCustomerAndLoanCard()

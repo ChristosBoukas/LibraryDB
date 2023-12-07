@@ -20,7 +20,6 @@ namespace LibraryDB
             //}
 
 
-            dataAccess.RemoveLoancardAndCustomerByID(1);
             Console.WriteLine("Finished");
             Console.ReadLine();
         }
