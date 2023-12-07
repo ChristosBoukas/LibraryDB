@@ -11,7 +11,7 @@ namespace NewtonLibraryChristos.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Author",
+                name: "Authors",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -21,7 +21,7 @@ namespace NewtonLibraryChristos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Author", x => x.id);
+                    table.PrimaryKey("PK_Authors", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,9 +67,9 @@ namespace NewtonLibraryChristos.Migrations
                 {
                     table.PrimaryKey("PK_AuthorBook", x => new { x.Authorid, x.Booksid });
                     table.ForeignKey(
-                        name: "FK_AuthorBook_Author_Authorid",
+                        name: "FK_AuthorBook_Authors_Authorid",
                         column: x => x.Authorid,
-                        principalTable: "Author",
+                        principalTable: "Authors",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -122,7 +122,7 @@ namespace NewtonLibraryChristos.Migrations
                 name: "LoanCards");
 
             migrationBuilder.DropTable(
-                name: "Author");
+                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Books");

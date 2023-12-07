@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -26,6 +27,8 @@ namespace LibraryDB.Data
 
         //Create book with an author--
 
+
+        #region Seeding Methods
         public void CreateBook()
         {
             using (Context context = new Context())
@@ -106,6 +109,10 @@ namespace LibraryDB.Data
             }
         }
 
+        public void CreateCustomerAndLoanCard()
+        {
+
+        }
 
         public void SeedCustomerAndLoanCard()
         {
@@ -152,7 +159,67 @@ namespace LibraryDB.Data
             }
         }
 
+        #endregion
 
+        #region Remove Methods
+
+        public void RemoveBookByTitle(string title)
+        {
+            using (Context context = new Context())
+            {
+                Book bookToRemove = GetFirstOrDefaultBookByTitle(title, context);
+                context.Books.Remove(bookToRemove);
+                context.SaveChanges() ;
+            }
+        }
+
+        public Book? GetFirstOrDefaultBookByTitle(string title, Context context)
+        {
+            return context.Books.Where(book => book.Title == title).FirstOrDefault();
+        }
+
+        public void RemoveBookByID(int bookID)
+        {
+            using (Context context = new Context())
+            {
+                Book bookToRemove = context.Books.Where(book => book.id == bookID).SingleOrDefault();
+                context.Books.Remove(bookToRemove);
+                context.SaveChanges();
+            }
+        }
+
+        public void RemoveAuthorByID(int authorID)
+        {
+            using (Context context = new Context())
+            {
+                Author authorToRemove = context.Authors.Where(author => author.id == authorID).SingleOrDefault();
+                context.Authors.Remove(authorToRemove);
+                context.SaveChanges();
+            }
+        }
+
+        public void RemoveLoancardAndCustomerByID(int loanCardID)
+        {
+            using (Context context = new Context())
+            {
+                LoanCard loanCardToRemove = context.LoanCards
+                    .Include(lc => lc.Customer)
+                    .Where(loanCard => loanCard.LoanCard_id == loanCardID)
+                    .SingleOrDefault();
+
+                Customer customerToRemove = loanCardToRemove.Customer;
+
+                context.Customers.Remove(customerToRemove);
+                context.LoanCards.Remove(loanCardToRemove);
+                
+                context.SaveChanges();
+            }
+        }
+
+
+        #endregion
+
+        #region Generate Methods
         public string GenerateISBN()
         {
             var rnd = new csSeedGenerator();
@@ -165,19 +232,13 @@ namespace LibraryDB.Data
             return rnd.Next(1000, 9000);
         }
 
-        public Book? GetFirstOrDefault(Book book, string title, Context context)
-        {
-            return context.Books.Where(book => book.Title == title).FirstOrDefault();
+
+        #endregion
+
+        #region Test Methods
 
 
-        }
-
-        //public T GetFirstOrDefault<T>()
-        //{
-
-            
-        //}
-
+        #endregion
 
 
     }

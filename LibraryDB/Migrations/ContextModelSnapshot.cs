@@ -54,7 +54,7 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.Book", b =>

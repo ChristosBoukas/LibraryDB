@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace NewtonLibraryChristos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231206155254_initial")]
+    [Migration("20231207102903_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.Book", b =>
