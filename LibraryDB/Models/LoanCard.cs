@@ -10,13 +10,9 @@ namespace LibraryDB.Models
 {
     internal class LoanCard
     {
-        [Key]
-        public int id { get; set; }
+        
+        public int Id { get; set; }
         public int Pin { get; set; }
-
-
-        [ForeignKey("Customer")]
-        public int Customerid { get; set; } // Foreign Key
         public Customer Customer { get; set; } // Reference Navigation to Dependent
 
 

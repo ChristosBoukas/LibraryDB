@@ -19,7 +19,7 @@ namespace LibraryDB
             //    dataAccess.SeedBookAndAuthor();
             //}
 
-
+            //dataAccess.RemoveLoancardAndCustomerByID(2);
             Console.WriteLine("Finished");
             Console.ReadLine();
         }

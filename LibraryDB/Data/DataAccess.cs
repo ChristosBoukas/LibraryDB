@@ -154,6 +154,7 @@ namespace LibraryDB.Data
                 newCustomer.LoanCard = newLoanCard;
                 newLoanCard.Customer = newCustomer;
 
+               context.Customers.Add(newCustomer);
                 context.LoanCards.Add(newLoanCard);
                 context.SaveChanges();
             }
@@ -248,7 +249,7 @@ namespace LibraryDB.Data
             {
                 LoanCard loanCardToRemove = context.LoanCards
                     .Include(lc => lc.Customer)
-                    .Where(loanCard => loanCard.id == loanCardID)
+                    .Where(loanCard => loanCard.Id == loanCardID)
                     .SingleOrDefault();
 
                 Customer customerToRemove = loanCardToRemove.Customer;

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace NewtonLibraryChristos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231208085833_initial")]
+    [Migration("20231208094438_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -94,11 +94,11 @@ namespace NewtonLibraryChristos.Migrations
 
             modelBuilder.Entity("LibraryDB.Models.Customer", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -111,29 +111,26 @@ namespace NewtonLibraryChristos.Migrations
                     b.Property<int>("LoanCardid")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoanCardid")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.LoanCard", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("Customerid")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Pin")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
-
-                    b.HasIndex("Customerid")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.ToTable("LoanCards");
                 });
@@ -149,7 +146,7 @@ namespace NewtonLibraryChristos.Migrations
                     b.Property<int>("Bookid")
                         .HasColumnType("int");
 
-                    b.Property<int>("LoanCardid")
+                    b.Property<int>("LoanCardId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LoanDate")
@@ -162,7 +159,7 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasIndex("Bookid");
 
-                    b.HasIndex("LoanCardid");
+                    b.HasIndex("LoanCardId");
 
                     b.ToTable("Transactions");
                 });
@@ -182,15 +179,15 @@ namespace NewtonLibraryChristos.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LibraryDB.Models.LoanCard", b =>
+            modelBuilder.Entity("LibraryDB.Models.Customer", b =>
                 {
-                    b.HasOne("LibraryDB.Models.Customer", "Customer")
-                        .WithOne("LoanCard")
-                        .HasForeignKey("LibraryDB.Models.LoanCard", "Customerid")
+                    b.HasOne("LibraryDB.Models.LoanCard", "LoanCard")
+                        .WithOne("Customer")
+                        .HasForeignKey("LibraryDB.Models.Customer", "LoanCardid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("LoanCard");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.Transaction", b =>
@@ -203,7 +200,7 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasOne("LibraryDB.Models.LoanCard", "LoanCard")
                         .WithMany()
-                        .HasForeignKey("LoanCardid")
+                        .HasForeignKey("LoanCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -212,9 +209,9 @@ namespace NewtonLibraryChristos.Migrations
                     b.Navigation("LoanCard");
                 });
 
-            modelBuilder.Entity("LibraryDB.Models.Customer", b =>
+            modelBuilder.Entity("LibraryDB.Models.LoanCard", b =>
                 {
-                    b.Navigation("LoanCard")
+                    b.Navigation("Customer")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
