@@ -13,6 +13,8 @@ namespace LibraryDB.Models
         
         public int Id { get; set; }
         public int Pin { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; }
         public Customer Customer { get; set; } // Reference Navigation to Dependent
 
 
