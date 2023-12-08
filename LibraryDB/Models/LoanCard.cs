@@ -11,7 +11,7 @@ namespace LibraryDB.Models
     internal class LoanCard
     {
         [Key]
-        public int LoanCard_id { get; set; }
+        public int id { get; set; }
         public int Pin { get; set; }
 
 

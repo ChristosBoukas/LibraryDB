@@ -28,7 +28,7 @@ namespace LibraryDB.Data
         //Create book with an author--
 
 
-        #region Seeding Methods
+        #region Seeding and Create Methods
         public void CreateBook()
         {
             using (Context context = new Context())
@@ -151,6 +151,7 @@ namespace LibraryDB.Data
 
                 LoanCard newLoanCard = new LoanCard();
                 newLoanCard.Pin = GeneratePin();
+                newCustomer.LoanCard = newLoanCard;
                 newLoanCard.Customer = newCustomer;
 
                 context.LoanCards.Add(newLoanCard);
@@ -186,6 +187,29 @@ namespace LibraryDB.Data
 
         #endregion
 
+        #region Book Loan Methods
+
+        //public void LoanBook(int loanCardID, int bookID)
+        //{
+        //    using (Context context = new Context())
+        //    {
+        //        Models.Transaction newTransaction = new Models.Transaction();
+        //        Book book
+
+
+        //        newTransaction.LoanCard = loanCard;
+        //        newTransaction.Book = book;
+        //        newTransaction.LoanDate = DateTime.Now;
+        //        book.IsAvailable = false;
+
+        //        context.Transactions.Add(newTransaction);
+        //        context.SaveChanges();
+            
+        //    }
+        //}
+
+        #endregion
+
         #region Remove Methods
 
         public void RemoveBookByTitle(string title)
@@ -196,11 +220,6 @@ namespace LibraryDB.Data
                 context.Books.Remove(bookToRemove);
                 context.SaveChanges() ;
             }
-        }
-
-        public Book? GetFirstOrDefaultBookByTitle(string title, Context context)
-        {
-            return context.Books.Where(book => book.Title == title).FirstOrDefault();
         }
 
         public void RemoveBookByID(int bookID)
@@ -229,7 +248,7 @@ namespace LibraryDB.Data
             {
                 LoanCard loanCardToRemove = context.LoanCards
                     .Include(lc => lc.Customer)
-                    .Where(loanCard => loanCard.LoanCard_id == loanCardID)
+                    .Where(loanCard => loanCard.id == loanCardID)
                     .SingleOrDefault();
 
                 Customer customerToRemove = loanCardToRemove.Customer;
@@ -257,6 +276,15 @@ namespace LibraryDB.Data
             return rnd.Next(1000, 9000);
         }
 
+
+        #endregion
+
+        #region Utilities
+
+        public Book? GetFirstOrDefaultBookByTitle(string title, Context context)
+        {
+            return context.Books.Where(book => book.Title == title).FirstOrDefault();
+        }
 
         #endregion
 

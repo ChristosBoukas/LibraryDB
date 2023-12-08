@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -45,7 +46,7 @@ namespace NewtonLibraryChristos.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Customer_id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -53,7 +54,7 @@ namespace NewtonLibraryChristos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Customer_id);
+                    table.PrimaryKey("PK_Customers", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,19 +85,47 @@ namespace NewtonLibraryChristos.Migrations
                 name: "LoanCards",
                 columns: table => new
                 {
-                    LoanCard_id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Pin = table.Column<int>(type: "int", nullable: false),
                     Customerid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LoanCards", x => x.LoanCard_id);
+                    table.PrimaryKey("PK_LoanCards", x => x.id);
                     table.ForeignKey(
                         name: "FK_LoanCards_Customers_Customerid",
                         column: x => x.Customerid,
                         principalTable: "Customers",
-                        principalColumn: "Customer_id",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LoanCardid = table.Column<int>(type: "int", nullable: false),
+                    Bookid = table.Column<int>(type: "int", nullable: false),
+                    LoanDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Books_Bookid",
+                        column: x => x.Bookid,
+                        principalTable: "Books",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_LoanCards_LoanCardid",
+                        column: x => x.LoanCardid,
+                        principalTable: "LoanCards",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -110,6 +139,16 @@ namespace NewtonLibraryChristos.Migrations
                 table: "LoanCards",
                 column: "Customerid",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_Bookid",
+                table: "Transactions",
+                column: "Bookid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_LoanCardid",
+                table: "Transactions",
+                column: "LoanCardid");
         }
 
         /// <inheritdoc />
@@ -119,13 +158,16 @@ namespace NewtonLibraryChristos.Migrations
                 name: "AuthorBook");
 
             migrationBuilder.DropTable(
-                name: "LoanCards");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "LoanCards");
 
             migrationBuilder.DropTable(
                 name: "Customers");

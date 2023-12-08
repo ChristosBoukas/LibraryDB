@@ -14,6 +14,7 @@ namespace LibraryDB.Data
         public DbSet<LoanCard> LoanCards { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -10,8 +10,7 @@ namespace LibraryDB.Models
 {
     internal class Customer
     {
-        [Key]
-        public int Customer_id { get; set; }
+        public int id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
