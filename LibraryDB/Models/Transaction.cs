@@ -9,7 +9,7 @@ namespace LibraryDB.Models
 {
     internal class Transaction
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public LoanCard LoanCard { get; set; } // Reference Navigation to Dependent
         public Book Book { get; set; } // Reference Navigation to Dependent
         public DateTime LoanDate { get; set; }

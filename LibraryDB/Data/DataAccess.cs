@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace LibraryDB.Data
 {
@@ -208,6 +209,21 @@ namespace LibraryDB.Data
             }
         }
 
+        public void ReturnBook(int bookID)
+        {
+            using (Context context = new Context())
+            {
+                Book book = GetBookByID(bookID, context);
+                Models.Transaction transaction = context.Transactions.Where(transaction => transaction.Id == book.TransactionId).SingleOrDefault();
+                
+                transaction.ReturnDate = DateTime.Now;
+                transaction.Book.IsAvailable = true;
+
+
+                context.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region Remove Methods
@@ -294,6 +310,11 @@ namespace LibraryDB.Data
         public LoanCard? GetLoanCardByID(int LoancardID, Context context)
         {
             return context.LoanCards.Where(loanCard => loanCard.Id == LoancardID).SingleOrDefault();
+        }
+
+        public Models.Transaction? GetTransactionByID(int transactionID, Context context)
+        {
+            return context.Transactions.Where(transaction => transaction.Id == transactionID).SingleOrDefault();
         }
 
         #endregion
