@@ -30,6 +30,8 @@ namespace LibraryDB.Models
         }
         public bool IsAvailable { get; set; }
 
+        public int? TransactionId { get; set; } // Foreign Key
+        public Transaction? Transaction { get; set; } // Reference Navigation Property
 
         public Book()
         {

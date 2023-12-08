@@ -19,7 +19,7 @@ namespace LibraryDB
             //    dataAccess.SeedBookAndAuthor();
             //}
 
-            
+            dataAccess.LoanBook(1, 1);
             Console.WriteLine("Finished");
             Console.ReadLine();
         }

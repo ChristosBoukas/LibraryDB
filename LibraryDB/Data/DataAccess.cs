@@ -190,24 +190,23 @@ namespace LibraryDB.Data
 
         #region Book Loan Methods
 
-        //public void LoanBook(int loanCardID, int bookID)
-        //{
-        //    using (Context context = new Context())
-        //    {
-        //        Models.Transaction newTransaction = new Models.Transaction();
-        //        Book book
+        public void LoanBook(int loanCardID, int bookID)
+        {
+            using (Context context = new Context())
+            {
+                Models.Transaction newTransaction = new Models.Transaction();
+                Book book = GetBookByID(bookID, context);
+                LoanCard loanCard = GetLoanCardByID(loanCardID, context);
 
+                newTransaction.LoanCard = loanCard;
+                newTransaction.Book = book;
+                newTransaction.LoanDate = DateTime.Now;
+                book.IsAvailable = false;
 
-        //        newTransaction.LoanCard = loanCard;
-        //        newTransaction.Book = book;
-        //        newTransaction.LoanDate = DateTime.Now;
-        //        book.IsAvailable = false;
-
-        //        context.Transactions.Add(newTransaction);
-        //        context.SaveChanges();
-            
-        //    }
-        //}
+                context.Transactions.Add(newTransaction);
+                context.SaveChanges();
+            }
+        }
 
         #endregion
 
@@ -227,7 +226,7 @@ namespace LibraryDB.Data
         {
             using (Context context = new Context())
             {
-                Book bookToRemove = context.Books.Where(book => book.id == bookID).SingleOrDefault();
+                Book bookToRemove = GetBookByID(bookID,context);
                 context.Books.Remove(bookToRemove);
                 context.SaveChanges();
             }
@@ -285,6 +284,16 @@ namespace LibraryDB.Data
         public Book? GetFirstOrDefaultBookByTitle(string title, Context context)
         {
             return context.Books.Where(book => book.Title == title).FirstOrDefault();
+        }
+
+        public Book? GetBookByID(int bookID, Context context)
+        {
+            return context.Books.Where(book => book.id == bookID).SingleOrDefault();
+        }
+
+        public LoanCard? GetLoanCardByID(int LoancardID, Context context)
+        {
+            return context.LoanCards.Where(loanCard => loanCard.Id == LoancardID).SingleOrDefault();
         }
 
         #endregion

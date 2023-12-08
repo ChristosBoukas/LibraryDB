@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace NewtonLibraryChristos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231208094438_initial")]
+    [Migration("20231208150637_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -84,10 +84,17 @@ namespace NewtonLibraryChristos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TransactionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("TransactionId")
+                        .IsUnique()
+                        .HasFilter("[TransactionId] IS NOT NULL");
 
                     b.ToTable("Books");
                 });
@@ -143,21 +150,16 @@ namespace NewtonLibraryChristos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Bookid")
-                        .HasColumnType("int");
-
                     b.Property<int>("LoanCardId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LoanDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ReturnDate")
+                    b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Bookid");
 
                     b.HasIndex("LoanCardId");
 
@@ -179,6 +181,15 @@ namespace NewtonLibraryChristos.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LibraryDB.Models.Book", b =>
+                {
+                    b.HasOne("LibraryDB.Models.Transaction", "Transaction")
+                        .WithOne("Book")
+                        .HasForeignKey("LibraryDB.Models.Book", "TransactionId");
+
+                    b.Navigation("Transaction");
+                });
+
             modelBuilder.Entity("LibraryDB.Models.Customer", b =>
                 {
                     b.HasOne("LibraryDB.Models.LoanCard", "LoanCard")
@@ -192,19 +203,11 @@ namespace NewtonLibraryChristos.Migrations
 
             modelBuilder.Entity("LibraryDB.Models.Transaction", b =>
                 {
-                    b.HasOne("LibraryDB.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("Bookid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LibraryDB.Models.LoanCard", "LoanCard")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("LoanCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Book");
 
                     b.Navigation("LoanCard");
                 });
@@ -212,6 +215,14 @@ namespace NewtonLibraryChristos.Migrations
             modelBuilder.Entity("LibraryDB.Models.LoanCard", b =>
                 {
                     b.Navigation("Customer")
+                        .IsRequired();
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("LibraryDB.Models.Transaction", b =>
+                {
+                    b.Navigation("Book")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
