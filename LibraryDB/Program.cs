@@ -23,12 +23,12 @@ namespace LibraryDB
             #region Remove
             //dataAccess.RemoveAuthorByID(20);
             //dataAccess.RemoveBookByID(2);
-            //dataAccess.RemoveLoancardAndCustomerByID(7);
+            //dataAccess.RemoveLoancardAndCustomerByID(1);
             #endregion
 
             #region Loan/Return Book & Show Loan History
             //dataAccess.LoanBook(1, 1);
-            //dataAccess.ReturnBook(1);
+            //dataAccess.ReturnBook();
             //dataAccess.ShowLoanHistoryByLoanCardId(1);
             #endregion
 
