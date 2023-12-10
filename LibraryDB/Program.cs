@@ -10,19 +10,19 @@ namespace LibraryDB
             DataAccess dataAccess = new DataAccess();
 
 
-            for (int i = 0; i < 10; i++)
-            {
-                dataAccess.SeedCustomerAndLoanCard();
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    dataAccess.SeedCustomerAndLoanCard();
+            //}
 
-            for (int i = 0; i < 20; i++)
-            {
-                dataAccess.SeedBookAndAuthor();
-            }
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    dataAccess.SeedBookAndAuthor();
+            //}
 
-            //dataAccess.LoanBook(1, 1);
-            dataAccess.ReturnBook(1);
-            //dataAccess.ShowLoanHistoryByLoanCardId(1);
+            //dataAccess.LoanBook(1, 2);
+            //dataAccess.ReturnBook(2);
+            dataAccess.ShowLoanHistoryByLoanCardId(1);
 
             Console.WriteLine("Finished");
             Console.ReadLine();

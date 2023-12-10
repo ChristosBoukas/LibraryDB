@@ -215,11 +215,11 @@ namespace LibraryDB.Data
             using (Context context = new Context())
             {
                 Book book = GetBookByID(bookID, context);
-                Models.Transaction transaction = context.Transactions.Where(transaction => transaction.Id == book.TransactionId).SingleOrDefault();
+                //Models.Transaction transaction = book.Transaction;
                 
-                transaction.ReturnDate = DateTime.Now;
-                transaction.Book.IsAvailable = true;
-                book.Transaction = null;
+                book.Transaction.ReturnDate = DateTime.Now;
+                book.Transaction.Book.IsAvailable = true;
+                //book.Transaction = null;
 
 
                 context.SaveChanges();
@@ -241,7 +241,7 @@ namespace LibraryDB.Data
 
                 foreach (Models.Transaction transaction in transactions)
                 {
-                    Console.WriteLine($"{transaction.Book}");
+                    Console.WriteLine($"{transaction.Book.Title}");
                 }
 
                 return transactions;
@@ -326,7 +326,9 @@ namespace LibraryDB.Data
 
         public Book? GetBookByID(int bookID, Context context)
         {
-            return context.Books.Where(book => book.Id == bookID).SingleOrDefault();
+            return context.Books
+                .Include(book => book.Transaction)
+                .Where(book => book.Id == bookID).SingleOrDefault();
         }
 
         public LoanCard? GetLoanCardByID(int loanCardID, Context context)
