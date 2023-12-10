@@ -14,21 +14,6 @@ namespace LibraryDB.Data
 {
     internal class DataAccess
     {
-
-        //Seed data
-
-        //Create Author
-        //Create Book
-        //Create Customer/Loancard
-
-        //Borrow a book
-        //Return a book
-
-        //Remove Data
-
-        //Create book with an author--
-
-
         #region Seeding and Create Methods
         public void CreateBook()
         {
@@ -106,7 +91,6 @@ namespace LibraryDB.Data
 
                 context.Authors.Add(newAuthor);
                 context.SaveChanges();
-
             }
         }
 
@@ -227,8 +211,6 @@ namespace LibraryDB.Data
             }
         }
 
-        #endregion
-
         public List<Models.Transaction> ShowLoanHistoryByLoanCardId(int loanCardID)
         {
             using (Context context = new Context())
@@ -248,6 +230,8 @@ namespace LibraryDB.Data
                 return transactions;
             }
         }
+
+        #endregion
 
         #region Remove Methods
 
@@ -347,12 +331,5 @@ namespace LibraryDB.Data
         }
 
         #endregion
-
-        #region Test Methods
-
-
-        #endregion
-
-
     }
 }

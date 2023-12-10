@@ -50,8 +50,5 @@ namespace LibraryDB.Data
             modelBuilder.UseEncryption(this._provider);
         }
 
-
-
-
     }
 }

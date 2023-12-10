@@ -29,7 +29,7 @@ namespace LibraryDB
             #region Loan/Return Book & Show Loan History
             //dataAccess.LoanBook(1, 1);
             //dataAccess.ReturnBook();
-            //dataAccess.ShowLoanHistoryByLoanCardId(1);
+            //dataAccess.ShowLoanHistoryByLoanCardId();
             #endregion
 
 
