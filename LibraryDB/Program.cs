@@ -9,25 +9,60 @@ namespace LibraryDB
 
             DataAccess dataAccess = new DataAccess();
 
+            #region Seed
+            //SeedCustomerWithLoanCards(20);
+            //SeedBooksWithAuthors(20);
+            #endregion
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    dataAccess.SeedCustomerAndLoanCard();
-            //}
+            #region Create
+            //dataAccess.CreateCustomerAndLoanCard();
+            //dataAccess.CreateBook();
+            //dataAccess.CreateAuthor();
+            #endregion
 
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    dataAccess.SeedBookAndAuthor();
-            //}
+            #region Remove
+            //dataAccess.RemoveAuthorByID();
+            //dataAccess.RemoveBookByID();
+            //dataAccess.RemoveLoancardAndCustomerByID();
+            #endregion
 
-            //dataAccess.LoanBook(1, 3);
-            //dataAccess.ReturnBook(3);
+            #region Loan/Return Book & Show Loan History
+            //dataAccess.LoanBook(1, 1);
+            //dataAccess.ReturnBook(1);
             //dataAccess.ShowLoanHistoryByLoanCardId(1);
+            #endregion
 
-            //dataAccess.RemoveBookByID(3);
+
             Console.WriteLine("Finished");
             Console.ReadLine();
         }
+
+
+        private static void SeedCustomerWithLoanCards(int amountToSeed)
+        {
+            DataAccess dataAccess = new DataAccess();
+            for (int i = 0; i < amountToSeed; i++)
+            {
+                dataAccess.SeedCustomerAndLoanCard();
+            }
+        }
+
+        private static void SeedBooksWithAuthors(int amountToSeed)
+        {
+            DataAccess dataAccess = new DataAccess();
+            for (int i = 0; i < amountToSeed; i++)
+            {
+                dataAccess.SeedBookAndAuthor();
+            }
+        }
+
+
+
+
+
+
+
+
     }
 
 }
