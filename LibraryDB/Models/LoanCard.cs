@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EntityFrameworkCore.EncryptColumn.Attribute;
 
 namespace LibraryDB.Models
 {
     internal class LoanCard
     {
         public int Id { get; set; }
+        [EncryptColumn]
         public int Pin { get; set; }
 
         public ICollection<Transaction> Transactions { get; set; }

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LibraryDB.Models;
+using EntityFrameworkCore.EncryptColumn.Util;
+using EntityFrameworkCore.EncryptColumn.Extension;
+using EntityFrameworkCore.EncryptColumn.Interfaces;
 
 namespace LibraryDB.Data
 {
@@ -26,6 +29,19 @@ namespace LibraryDB.Data
                 User Id=NewtonLibrary;
                 password=NewtonLibrary");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.UseEncryption(this._provider);
+        }
+
+        private readonly IEncryptionProvider _provider;
+        public Context()
+        {
+            this._provider = new GenerateEncryptionProvider("fth84hdbj6536example_encrypt_key");
+        }
+
+
 
 
 
