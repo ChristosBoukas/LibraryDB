@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace NewtonLibraryChristos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231210190819_initial")]
+    [Migration("20231210200032_initial")]
     partial class initial
     {
         /// <inheritdoc />

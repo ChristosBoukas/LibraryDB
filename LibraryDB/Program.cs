@@ -10,7 +10,7 @@ namespace LibraryDB
             DataAccess dataAccess = new DataAccess();
 
             #region Seed
-            SeedCustomerWithLoanCards(20);
+            //SeedCustomerWithLoanCards(20);
             //SeedBooksWithAuthors(20);
             #endregion
 
@@ -23,7 +23,7 @@ namespace LibraryDB
             #region Remove
             //dataAccess.RemoveAuthorByID(20);
             //dataAccess.RemoveBookByID(2);
-            //dataAccess.RemoveLoancardAndCustomerByID();
+            //dataAccess.RemoveLoancardAndCustomerByID(7);
             #endregion
 
             #region Loan/Return Book & Show Loan History
