@@ -20,10 +20,11 @@ namespace LibraryDB
             //    dataAccess.SeedBookAndAuthor();
             //}
 
-            //dataAccess.LoanBook(1, 4);
-            //dataAccess.ReturnBook(4);
+            //dataAccess.LoanBook(1, 3);
+            //dataAccess.ReturnBook(3);
             //dataAccess.ShowLoanHistoryByLoanCardId(1);
 
+            //dataAccess.RemoveBookByID(3);
             Console.WriteLine("Finished");
             Console.ReadLine();
         }
