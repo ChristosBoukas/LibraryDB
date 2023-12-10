@@ -23,8 +23,8 @@ namespace LibraryDB.Data
                 Database=NewtonLibraryChristos;
                 Trusted_Connection=true;
                 Trust Server Certificate=yes;
-                User Id=NewtonLibraryChristos;
-                password=NewtonLibraryChristos");
+                User Id=NewtonLibrary;
+                password=NewtonLibrary");
         }
 
 

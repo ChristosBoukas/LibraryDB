@@ -21,8 +21,8 @@ namespace LibraryDB
             #endregion
 
             #region Remove
-            //dataAccess.RemoveAuthorByID();
-            //dataAccess.RemoveBookByID();
+            //dataAccess.RemoveAuthorByID(20);
+            //dataAccess.RemoveBookByID(2);
             //dataAccess.RemoveLoancardAndCustomerByID();
             #endregion
 
