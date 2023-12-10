@@ -120,7 +120,7 @@ namespace LibraryDB.Data
                 string inputString = Console.ReadLine();
                 if (int.TryParse(inputString, out int outResult))
                 {
-                    newLoanCard.Pin = outResult;
+                    newLoanCard.Pin = outResult.ToString();
                 }
 
                 //Create Customer
@@ -309,10 +309,10 @@ namespace LibraryDB.Data
             return $"{rnd.Next(1000, 9000)}-{rnd.Next(1, 9)}-{rnd.Next(10, 99)}-{rnd.Next(100000, 999999)}-{rnd.Next(1, 9)}";
         }
 
-        public int GeneratePin()
+        public string GeneratePin()
         {
             var rnd = new csSeedGenerator();
-            return rnd.Next(1000, 9000);
+            return rnd.Next(1000, 9000).ToString();
         }
 
 

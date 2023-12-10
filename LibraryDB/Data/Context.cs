@@ -30,10 +30,7 @@ namespace LibraryDB.Data
                 password=NewtonLibrary");
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.UseEncryption(this._provider);
-        }
+
 
         private readonly IEncryptionProvider _provider;
         public Context()
@@ -41,6 +38,10 @@ namespace LibraryDB.Data
             this._provider = new GenerateEncryptionProvider("fth84hdbj6536example_encrypt_key");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.UseEncryption(this._provider);
+        }
 
 
 

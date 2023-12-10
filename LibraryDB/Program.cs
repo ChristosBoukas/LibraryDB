@@ -10,7 +10,7 @@ namespace LibraryDB
             DataAccess dataAccess = new DataAccess();
 
             #region Seed
-            //SeedCustomerWithLoanCards(20);
+            SeedCustomerWithLoanCards(20);
             //SeedBooksWithAuthors(20);
             #endregion
 
