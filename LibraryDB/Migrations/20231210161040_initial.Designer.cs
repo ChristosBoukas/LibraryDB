@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace NewtonLibraryChristos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231210153807_initial")]
+    [Migration("20231210161040_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -92,6 +92,8 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TransactionId");
+
                     b.ToTable("Books");
                 });
 
@@ -160,8 +162,7 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId")
-                        .IsUnique();
+                    b.HasIndex("BookId");
 
                     b.HasIndex("LoanCardId");
 
@@ -183,6 +184,15 @@ namespace NewtonLibraryChristos.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LibraryDB.Models.Book", b =>
+                {
+                    b.HasOne("LibraryDB.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId");
+
+                    b.Navigation("Transaction");
+                });
+
             modelBuilder.Entity("LibraryDB.Models.Customer", b =>
                 {
                     b.HasOne("LibraryDB.Models.LoanCard", "LoanCard")
@@ -197,8 +207,8 @@ namespace NewtonLibraryChristos.Migrations
             modelBuilder.Entity("LibraryDB.Models.Transaction", b =>
                 {
                     b.HasOne("LibraryDB.Models.Book", "Book")
-                        .WithOne("Transaction")
-                        .HasForeignKey("LibraryDB.Models.Transaction", "BookId")
+                        .WithMany()
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -211,11 +221,6 @@ namespace NewtonLibraryChristos.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("LoanCard");
-                });
-
-            modelBuilder.Entity("LibraryDB.Models.Book", b =>
-                {
-                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.LoanCard", b =>
