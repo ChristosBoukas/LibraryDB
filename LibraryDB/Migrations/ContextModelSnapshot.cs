@@ -112,13 +112,18 @@ namespace NewtonLibraryChristos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoanCardid")
+                    b.Property<int>("LoanCardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TransactionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LoanCardid")
+                    b.HasIndex("LoanCardId")
                         .IsUnique();
+
+                    b.HasIndex("TransactionId");
 
                     b.ToTable("Customers");
                 });
@@ -141,11 +146,11 @@ namespace NewtonLibraryChristos.Migrations
 
             modelBuilder.Entity("LibraryDB.Models.Transaction", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("LoanCardId")
                         .HasColumnType("int");
@@ -156,7 +161,7 @@ namespace NewtonLibraryChristos.Migrations
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("LoanCardId");
 
@@ -191,11 +196,17 @@ namespace NewtonLibraryChristos.Migrations
                 {
                     b.HasOne("LibraryDB.Models.LoanCard", "LoanCard")
                         .WithOne("Customer")
-                        .HasForeignKey("LibraryDB.Models.Customer", "LoanCardid")
+                        .HasForeignKey("LibraryDB.Models.Customer", "LoanCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LibraryDB.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId");
+
                     b.Navigation("LoanCard");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.Transaction", b =>
