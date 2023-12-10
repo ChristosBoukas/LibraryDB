@@ -18,8 +18,8 @@ namespace LibraryDB.Models
         public int LoanCardId { get; set; } // Foreign Key
         public LoanCard LoanCard { get; set; } // Reference Navigation Property, key used to set "current transaction", used for returning the book.
 
-        public int? TransactionId { get; set; } // Foreign Key
-        public Transaction? Transaction { get; set; } // Reference Navigation Property.
+        //public int? TransactionId { get; set; } // Foreign Key
+        //public Transaction? Transaction { get; set; } // Reference Navigation Property.
 
         public Customer()
         {

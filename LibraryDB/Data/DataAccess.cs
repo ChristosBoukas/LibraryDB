@@ -202,6 +202,7 @@ namespace LibraryDB.Data
                 newTransaction.LoanCard = loanCard;
                 newTransaction.Book = book;
                 newTransaction.LoanDate = DateTime.Now;
+                book.Transaction = newTransaction;
                 book.IsAvailable = false;
 
                 context.Transactions.Add(newTransaction);
@@ -218,6 +219,7 @@ namespace LibraryDB.Data
                 
                 transaction.ReturnDate = DateTime.Now;
                 transaction.Book.IsAvailable = true;
+                book.Transaction = null;
 
 
                 context.SaveChanges();
