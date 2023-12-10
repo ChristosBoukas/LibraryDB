@@ -27,12 +27,12 @@ namespace NewtonLibraryChristos.Migrations
                     b.Property<int>("Authorid")
                         .HasColumnType("int");
 
-                    b.Property<int>("Booksid")
+                    b.Property<int>("BooksId")
                         .HasColumnType("int");
 
-                    b.HasKey("Authorid", "Booksid");
+                    b.HasKey("Authorid", "BooksId");
 
-                    b.HasIndex("Booksid");
+                    b.HasIndex("BooksId");
 
                     b.ToTable("AuthorBook");
                 });
@@ -60,11 +60,11 @@ namespace NewtonLibraryChristos.Migrations
 
             modelBuilder.Entity("LibraryDB.Models.Book", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Grade")
                         .IsRequired()
@@ -87,7 +87,7 @@ namespace NewtonLibraryChristos.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("TransactionId")
                         .IsUnique()
@@ -115,15 +115,10 @@ namespace NewtonLibraryChristos.Migrations
                     b.Property<int>("LoanCardId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TransactionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LoanCardId")
                         .IsUnique();
-
-                    b.HasIndex("TransactionId");
 
                     b.ToTable("Customers");
                 });
@@ -178,7 +173,7 @@ namespace NewtonLibraryChristos.Migrations
 
                     b.HasOne("LibraryDB.Models.Book", null)
                         .WithMany()
-                        .HasForeignKey("Booksid")
+                        .HasForeignKey("BooksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -200,13 +195,7 @@ namespace NewtonLibraryChristos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibraryDB.Models.Transaction", "Transaction")
-                        .WithMany()
-                        .HasForeignKey("TransactionId");
-
                     b.Navigation("LoanCard");
-
-                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("LibraryDB.Models.Transaction", b =>

@@ -228,6 +228,26 @@ namespace LibraryDB.Data
 
         #endregion
 
+        public List<Models.Transaction> ShowLoanHistoryByLoanCardId(int loanCardID)
+        {
+            using (Context context = new Context())
+            {
+                LoanCard loanCard = GetLoanCardByID(loanCardID, context);
+
+                List<Models.Transaction> transactions = context.Transactions
+                    .Include(transaction => transaction.Book) // Include related Book
+                    .Where(transaction => transaction.LoanCard.Id == loanCardID)
+                    .ToList();
+
+                foreach (Models.Transaction transaction in transactions)
+                {
+                    Console.WriteLine($"{transaction.Book}");
+                }
+
+                return transactions;
+            }
+        }
+
         #region Remove Methods
 
         public void RemoveBookByTitle(string title)
@@ -306,12 +326,16 @@ namespace LibraryDB.Data
 
         public Book? GetBookByID(int bookID, Context context)
         {
-            return context.Books.Where(book => book.id == bookID).SingleOrDefault();
+            return context.Books.Where(book => book.Id == bookID).SingleOrDefault();
         }
 
-        public LoanCard? GetLoanCardByID(int LoancardID, Context context)
+        public LoanCard? GetLoanCardByID(int loanCardID, Context context)
         {
-            return context.LoanCards.Where(loanCard => loanCard.Id == LoancardID).SingleOrDefault();
+            return context.LoanCards
+                .Include(loanCard => loanCard.Transactions)
+                 .ThenInclude(transaction => transaction.Book)
+                .Where(loanCard => loanCard.Id == loanCardID)
+                .SingleOrDefault();
         }
 
         public Models.Transaction? GetTransactionByID(int transactionID, Context context)

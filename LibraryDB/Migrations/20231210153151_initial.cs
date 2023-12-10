@@ -39,6 +39,27 @@ namespace NewtonLibraryChristos.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LoanCardId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_LoanCards_LoanCardId",
+                        column: x => x.LoanCardId,
+                        principalTable: "LoanCards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -63,7 +84,7 @@ namespace NewtonLibraryChristos.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -74,36 +95,9 @@ namespace NewtonLibraryChristos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.id);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Books_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LoanCardId = table.Column<int>(type: "int", nullable: false),
-                    TransactionId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_LoanCards_LoanCardId",
-                        column: x => x.LoanCardId,
-                        principalTable: "LoanCards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Customers_Transactions_TransactionId",
                         column: x => x.TransactionId,
                         principalTable: "Transactions",
                         principalColumn: "Id");
@@ -114,11 +108,11 @@ namespace NewtonLibraryChristos.Migrations
                 columns: table => new
                 {
                     Authorid = table.Column<int>(type: "int", nullable: false),
-                    Booksid = table.Column<int>(type: "int", nullable: false)
+                    BooksId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorBook", x => new { x.Authorid, x.Booksid });
+                    table.PrimaryKey("PK_AuthorBook", x => new { x.Authorid, x.BooksId });
                     table.ForeignKey(
                         name: "FK_AuthorBook_Authors_Authorid",
                         column: x => x.Authorid,
@@ -126,17 +120,17 @@ namespace NewtonLibraryChristos.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AuthorBook_Books_Booksid",
-                        column: x => x.Booksid,
+                        name: "FK_AuthorBook_Books_BooksId",
+                        column: x => x.BooksId,
                         principalTable: "Books",
-                        principalColumn: "id",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthorBook_Booksid",
+                name: "IX_AuthorBook_BooksId",
                 table: "AuthorBook",
-                column: "Booksid");
+                column: "BooksId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_TransactionId",
@@ -150,11 +144,6 @@ namespace NewtonLibraryChristos.Migrations
                 table: "Customers",
                 column: "LoanCardId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_TransactionId",
-                table: "Customers",
-                column: "TransactionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_LoanCardId",

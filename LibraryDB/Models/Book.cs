@@ -9,7 +9,7 @@ namespace LibraryDB.Models
 {
     internal class Book
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public ICollection<Author> Author { get; set; } = new List<Author>();
         public string Title { get; set; }
         public string ISBN { get; set; }

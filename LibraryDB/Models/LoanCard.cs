@@ -10,7 +10,6 @@ namespace LibraryDB.Models
 {
     internal class LoanCard
     {
-        
         public int Id { get; set; }
         public int Pin { get; set; }
 

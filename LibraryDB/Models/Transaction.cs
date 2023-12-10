@@ -14,6 +14,7 @@ namespace LibraryDB.Models
         public Book Book { get; set; } // Reference Navigation to Dependent
         public DateTime LoanDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        
 
         public Transaction()
         {

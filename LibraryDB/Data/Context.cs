@@ -27,14 +27,6 @@ namespace LibraryDB.Data
                 password=NewtonLibraryChristos");
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Customer>()
-        //        .HasOne(c => c.LoanCard)
-        //        .WithOne(l => l.Customer)
-        //        .HasForeignKey<LoanCard>(l => l.Customerid)
-        //        .IsRequired();
-        //}
 
 
     }
